@@ -1,5 +1,7 @@
 package edu.ncsu.csc326.coffeemaker;
 
+import java.math.BigDecimal;
+
 import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 
 /**
@@ -7,7 +9,7 @@ import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
  */
 public class Recipe {
     private String name;
-    private int price;
+    private BigDecimal price;
     private int amtCoffee;
     private int amtMilk;
     private int amtSugar;
@@ -18,7 +20,7 @@ public class Recipe {
      */
     public Recipe() {
     	this.name = "";
-    	this.price = 0;
+    	this.price = new BigDecimal("0.00");
     	this.amtCoffee = 0;
     	this.amtMilk = 0;
     	this.amtSugar = 0;
@@ -131,20 +133,20 @@ public class Recipe {
     /**
 	 * @return   Returns the price.
 	 */
-    public int getPrice() {
+    public BigDecimal getPrice() {
 		return price;
 	}
     /**
 	 * @param price   The price to set.
 	 */
     public void setPrice(String price) throws RecipeException{
-    	int amtPrice = 0;
+    	BigDecimal amtPrice;
     	try {
-    		amtPrice = Integer.parseInt(price);
+    		amtPrice = new BigDecimal(price);
     	} catch (NumberFormatException e) {
     		throw new RecipeException("Price must be a positive integer");
     	}
-		if (amtPrice > 0) {
+		if (amtPrice.compareTo(BigDecimal.ZERO) > 0) {
 			this.price = amtPrice;
 		} else {
 			throw new RecipeException("Price must be a positive integer");
